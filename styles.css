@@ -1952,3 +1952,224 @@ img { max-width: 100%; display: block; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============================================
+   WHATSAPP FLOATING WIDGET (style Apeva)
+   ============================================ */
+.wa-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  pointer-events: none;
+}
+.wa-widget > * { pointer-events: auto; }
+
+/* Bouton flottant principal (FAB) */
+.wa-fab {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8px 24px rgba(37, 211, 102, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  text-decoration: none;
+}
+.wa-fab::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: rgba(37, 211, 102, 0.35);
+  z-index: -1;
+  animation: wa-pulse 2s ease-out infinite;
+}
+@keyframes wa-pulse {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.wa-fab:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 12px 32px rgba(37, 211, 102, 0.55),
+    0 4px 16px rgba(0, 0, 0, 0.4);
+}
+.wa-fab svg { width: 30px; height: 30px; }
+
+/* Bulle preview style WhatsApp */
+.wa-preview {
+  width: 300px;
+  background: #1a1a26;
+  border: 1px solid rgba(37, 211, 102, 0.3);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 16px 50px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+  pointer-events: none !important;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.wa-preview.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto !important;
+}
+
+.wa-preview__close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s, color 0.2s;
+}
+.wa-preview__close:hover {
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
+}
+
+.wa-preview__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px 12px 16px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+}
+.wa-preview__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--bg);
+}
+.wa-preview__avatar::before {
+  content: 'V';
+}
+.wa-online-dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  background: #4ade80;
+  border-radius: 50%;
+  border: 2px solid #128C7E;
+  animation: wa-online-pulse 2s ease-in-out infinite;
+}
+@keyframes wa-online-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+  50% { box-shadow: 0 0 0 6px rgba(74, 222, 128, 0); }
+}
+
+.wa-preview__info {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  min-width: 0;
+}
+.wa-preview__info strong {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+.wa-preview__info span {
+  font-size: 0.78rem;
+  opacity: 0.85;
+}
+
+.wa-preview__body {
+  padding: 18px 16px 14px;
+  background-color: #0f1419;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='none' stroke='rgba(37,211,102,0.04)' stroke-width='1'/%3E%3C/svg%3E");
+}
+.wa-preview__msg {
+  background: #1f2c33;
+  color: #e9edef;
+  padding: 10px 14px;
+  border-radius: 8px 8px 8px 2px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+  max-width: 90%;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.wa-preview__msg b { color: #25D366; font-weight: 700; }
+.wa-preview__msg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -6px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 8px 8px 0;
+  border-color: transparent #1f2c33 transparent transparent;
+}
+
+.wa-preview__cta {
+  display: block;
+  text-align: center;
+  padding: 14px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.93rem;
+  text-decoration: none;
+  transition: filter 0.2s;
+}
+.wa-preview__cta:hover {
+  filter: brightness(1.1);
+}
+
+/* Mobile : un peu plus compact, marges ajustées */
+@media (max-width: 640px) {
+  .wa-widget {
+    bottom: 80px; /* laisse de la place pour la sticky-bar */
+    right: 16px;
+    gap: 10px;
+  }
+  .wa-fab { width: 54px; height: 54px; }
+  .wa-fab svg { width: 26px; height: 26px; }
+  .wa-preview { width: calc(100vw - 32px); max-width: 300px; }
+}
+
+/* Si sticky-bar visible, on remonte le widget */
+.sticky-bar.visible ~ .wa-widget {
+  bottom: 80px;
+}
+@media (max-width: 640px) {
+  .sticky-bar.visible ~ .wa-widget {
+    bottom: 130px;
+  }
+}

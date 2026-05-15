@@ -1,5 +1,5 @@
 /* ============================================
-   SCARE AGENCY — Interactions
+   VYDIO — Interactions
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -101,6 +101,38 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
       const y = window.scrollY * 0.3;
       heroGlow.style.transform = `translateX(-50%) translateY(${y}px)`;
+    });
+  }
+
+  // ----- WhatsApp widget : bulle preview apparaît après 5 sec
+  const waPreview = document.getElementById('waPreview');
+  const waPreviewClose = document.getElementById('waPreviewClose');
+  const waFab = document.getElementById('waFab');
+
+  if (waPreview && waPreviewClose && waFab) {
+    const STORAGE_KEY = 'vydio_wa_preview_dismissed';
+    const dismissed = localStorage.getItem(STORAGE_KEY);
+
+    // Affichage après 5 secondes (si pas déjà fermé dans cette session)
+    if (!dismissed) {
+      setTimeout(() => {
+        waPreview.classList.add('visible');
+      }, 5000);
+    }
+
+    // Fermer la bulle au clic sur la croix → mémorise pour la session
+    waPreviewClose.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      waPreview.classList.remove('visible');
+      try {
+        localStorage.setItem(STORAGE_KEY, Date.now().toString());
+      } catch (err) { /* localStorage peut être bloqué */ }
+    });
+
+    // Cacher la bulle quand l'utilisateur clique sur le bouton FAB (il part vers WhatsApp)
+    waFab.addEventListener('click', () => {
+      waPreview.classList.remove('visible');
     });
   }
 
