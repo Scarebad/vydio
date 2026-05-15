@@ -459,20 +459,15 @@
         Ta facture arrive dans ta boîte mail dans les prochaines secondes.
       </p>
 
-      <!-- ====== RÉCAP DE COMMANDE ====== -->
+      <!-- ====== RÉCAP DE COMMANDE (dynamique) ====== -->
       <div class="ty-order">
         <div class="ty-order__head">
           <span class="ty-order__label">Récap de ta commande</span>
           <span class="ty-order__badge">En cours de prise en charge</span>
         </div>
-        <div class="ty-order__name">Pack Growth — 20 créas UGC IA</div>
-        <div class="ty-order__rows">
-          <div class="ty-order__row"><span>20 vidéos UGC IA · format 9:16</span><span>✓ Inclus</span></div>
-          <div class="ty-order__row"><span>20 hooks différents testés</span><span>✓ Inclus</span></div>
-          <div class="ty-order__row"><span>30 images 4:5 offertes</span><span>✓ Inclus</span></div>
-          <div class="ty-order__row"><span>Garantie 2 ROAS ou remboursé</span><span>✓ Activée</span></div>
-          <div class="ty-order__row"><span>Droits commerciaux à vie</span><span>✓ Transférés</span></div>
-          <div class="ty-order__row"><span>Brief stratégie 30min offert</span><span>✓ À planifier</span></div>
+        <div class="ty-order__name" id="orderName">Pack Growth — 20 créas UGC IA</div>
+        <div class="ty-order__rows" id="orderRows">
+          <!-- Rempli par JS selon le pack -->
         </div>
       </div>
 
@@ -493,7 +488,7 @@
           <div class="ty-step__num">1</div>
           <div class="ty-step__body">
             <div class="ty-step__title">Onboarding express sur WhatsApp</div>
-            <div class="ty-step__desc">On a besoin de 3 infos pour démarrer : <b>lien Shopify</b>, <b>3 photos produit</b>, et <b>ta cible client idéale</b>. <br>Ça prend 5 minutes chrono. Zéro Notion à remplir.</div>
+            <div class="ty-step__desc" id="step1Desc">On a besoin de 3 infos pour démarrer : <b>lien Shopify</b>, <b>3 photos produit</b>, et <b>ta cible client idéale</b>.<br>Ça prend 5 minutes chrono. Zéro Notion à remplir.</div>
             <span class="ty-step__tag">Maintenant — clique le bouton vert ↓</span>
           </div>
         </div>
@@ -502,7 +497,7 @@
           <div class="ty-step__num">2</div>
           <div class="ty-step__body">
             <div class="ty-step__title">Production lancée par notre équipe</div>
-            <div class="ty-step__desc">Dès qu'on a tes infos, on écrit <b>20 scripts uniques</b> (3 angles : douleur · désir · preuve), on choisit les avatars, et on lance la prod IA.</div>
+            <div class="ty-step__desc" id="step2Desc">Dès qu'on a tes infos, on écrit <b>20 scripts uniques</b> (3 angles : douleur · désir · preuve), on choisit les avatars, et on lance la prod IA.</div>
             <span class="ty-step__tag">Sous 24h après ton brief</span>
           </div>
         </div>
@@ -510,9 +505,9 @@
         <div class="ty-step">
           <div class="ty-step__num">3</div>
           <div class="ty-step__body">
-            <div class="ty-step__title">Tes 20 créas livrées sur Drive</div>
-            <div class="ty-step__desc">Tu reçois un lien Drive privé avec <b>tes 20 vidéos en formats 9:16 avec et sans captions</b>, plus tes 30 images 4:5. Prêtes à uploader sur Meta.</div>
-            <span class="ty-step__tag">J+5 ouvrés max</span>
+            <div class="ty-step__title" id="step3Title">Tes 20 créas livrées sur Drive</div>
+            <div class="ty-step__desc" id="step3Desc">Tu reçois un lien Drive privé avec <b>tes 20 vidéos en formats 9:16 avec et sans captions</b>, plus tes 30 images 4:5. Prêtes à uploader sur Meta.</div>
+            <span class="ty-step__tag" id="step3Tag">J+5 ouvrés max</span>
           </div>
         </div>
 
@@ -520,7 +515,7 @@
           <div class="ty-step__num">4</div>
           <div class="ty-step__body">
             <div class="ty-step__title">Tu lances, tu scales, tu reviens nous voir</div>
-            <div class="ty-step__desc">Tu uploades sur Meta Ads. Premier winner détecté sous 7 jours en moyenne. <b>Si aucune des 20 ne fait 2 ROAS</b>, on te rembourse à 100%.</div>
+            <div class="ty-step__desc" id="step4Desc">Tu uploades sur Meta Ads. Premier winner détecté sous 7 jours en moyenne. <b>Si aucune des 20 ne fait 2 ROAS</b>, on te rembourse à 100%.</div>
             <span class="ty-step__tag">Ta nouvelle vie commence</span>
           </div>
         </div>
@@ -533,7 +528,7 @@
           Plus vite tu nous envoies ton lien Shopify, plus vite tes créas sont en prod.<br>
           On répond <b>à la seconde</b> ⚡
         </p>
-        <a href="https://wa.me/32483107116?text=Hey%20!%20Je%20viens%20de%20commander%20le%20Pack%20Growth%20Vydio.%20Je%20suis%20pr%C3%AAt%20%C3%A0%20faire%20le%20brief%20de%205%20min." target="_blank" rel="noopener" class="ty-cta__btn">
+        <a id="waCta" href="https://wa.me/32483107116?text=Hey%20!%20Je%20viens%20de%20commander%20le%20Pack%20Growth%20Vydio.%20Je%20suis%20pr%C3%AAt%20%C3%A0%20faire%20le%20brief%20de%205%20min." target="_blank" rel="noopener" class="ty-cta__btn">
           <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor">
             <path d="M27.42 4.58A15.93 15.93 0 0 0 16.05 0C7.36 0 .28 7.07.28 15.76c0 2.78.73 5.49 2.12 7.88L0 32l8.53-2.24a15.77 15.77 0 0 0 7.52 1.92h.01c8.7 0 15.78-7.07 15.78-15.76 0-4.21-1.64-8.17-4.42-11.34ZM16.06 28.66h-.01a13.13 13.13 0 0 1-6.69-1.83l-.48-.29-4.97 1.3 1.33-4.85-.31-.5a13.1 13.1 0 0 1-2.01-6.99c0-7.24 5.89-13.12 13.13-13.12 3.5 0 6.8 1.36 9.27 3.85a13 13 0 0 1 3.85 9.28c0 7.23-5.89 13.11-13.11 13.11Zm7.18-9.81c-.39-.2-2.32-1.15-2.68-1.27-.36-.13-.62-.2-.88.2-.26.39-1.01 1.27-1.24 1.53-.23.26-.45.29-.84.1-.39-.2-1.66-.61-3.16-1.95-1.17-1.04-1.96-2.32-2.19-2.71-.23-.39-.02-.6.17-.79.17-.17.39-.45.58-.68.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.68-.1-.2-.88-2.12-1.21-2.91-.32-.76-.64-.66-.88-.67-.23-.01-.49-.01-.75-.01s-.68.1-1.04.49c-.36.39-1.37 1.34-1.37 3.27 0 1.92 1.4 3.78 1.6 4.04.2.26 2.76 4.22 6.69 5.92.94.4 1.67.65 2.24.83.94.3 1.79.26 2.46.16.75-.11 2.32-.95 2.65-1.86.33-.91.33-1.69.23-1.86-.1-.16-.36-.26-.75-.46Z"/>
           </svg>
@@ -551,15 +546,15 @@
             <div class="ty-info__label">Ta facture</div>
             <div class="ty-info__value">Envoyée par mail dans la minute. Conforme TVA BE/FR pour ta compta.</div>
           </div>
-          <div class="ty-info__card">
-            <div class="ty-info__icon">🗓️</div>
-            <div class="ty-info__label">Brief stratégie 30min</div>
-            <div class="ty-info__value">Offert avec ton Pack Growth. On planifie en visio quand tu veux.</div>
+          <div class="ty-info__card" id="infoBriefCard">
+            <div class="ty-info__icon" id="infoBriefIcon">🗓️</div>
+            <div class="ty-info__label" id="infoBriefLabel">Brief stratégie 30min</div>
+            <div class="ty-info__value" id="infoBriefValue">Offert avec ton Pack Growth. On planifie en visio quand tu veux.</div>
           </div>
-          <div class="ty-info__card">
+          <div class="ty-info__card" id="infoGuaranteeCard">
             <div class="ty-info__icon">🛡️</div>
-            <div class="ty-info__label">Garantie ROAS</div>
-            <div class="ty-info__value">Si aucune créa ne fait 2 ROAS sur 7j de test, on te rembourse à 100%.</div>
+            <div class="ty-info__label" id="infoGuaranteeLabel">Garantie ROAS</div>
+            <div class="ty-info__value" id="infoGuaranteeValue">Si aucune créa ne fait 2 ROAS sur 7j de test, on te rembourse à 100%.</div>
           </div>
         </div>
       </div>
@@ -574,12 +569,156 @@
   </div>
 
   <script>
-    // Auto-déclenchement du conversion event Meta Pixel / GA4 (sera activé quand les IDs seront connus)
-    // Pour l'instant : juste console.log pour vérifier que la page charge bien
-    console.log('Vydio · Page de confirmation chargée — prêt pour tracking conversion');
+    /* ============================================
+       PAGE MERCI — Contenu dynamique selon ?pack=
+       Usage : merci.html?pack=starter | growth | scale
+       Défaut si paramètre absent : growth
+       ============================================ */
 
-    // TODO quand tu auras Meta Pixel : fbq('track', 'Purchase', { value: 859.00, currency: 'EUR' });
-    // TODO quand tu auras GA4 : gtag('event', 'purchase', { transaction_id: '...', value: 859.00, currency: 'EUR' });
+    const PACKS = {
+      starter: {
+        name: 'Pack Starter — 3 créas UGC IA',
+        price: 169,
+        rows: [
+          ['3 vidéos UGC IA · format 9:16', '✓ Inclus'],
+          ['1 avatar unique par vidéo', '✓ Inclus'],
+          ['Versions avec et sans captions', '✓ Incluses'],
+          ['10 images 4:5 offertes', '✓ Inclus'],
+          ['Livraison 48h chrono', '✓ Activée'],
+          ['Droits commerciaux à vie', '✓ Transférés']
+        ],
+        // Step 1 : brief
+        step1: 'On a besoin de 3 infos pour démarrer : <b>lien Shopify</b>, <b>3 photos produit</b>, et <b>ta cible client idéale</b>.<br>Ça prend 5 minutes chrono. Zéro Notion à remplir.',
+        // Step 2 : production
+        step2: 'Dès qu\'on a tes infos, on écrit <b>3 scripts uniques</b> (3 angles : douleur · désir · preuve), on choisit l\'avatar, et on lance la prod IA.',
+        // Step 3 : livraison
+        step3Title: 'Tes 3 créas livrées sur Drive',
+        step3Desc: 'Tu reçois un lien Drive privé avec <b>tes 3 vidéos en formats 9:16 avec et sans captions</b>, plus tes 10 images 4:5. Prêtes à uploader sur Meta.',
+        step3Tag: '48h chrono',
+        // Step 4 : test
+        step4: 'Tu uploades sur Meta Ads. <b>3 créas, c\'est juste pour tester la qualité Vydio.</b> Pour vraiment trouver un winner, il faudra passer au Pack Growth (20 créas).',
+        // CTA WhatsApp
+        waMessage: 'Hey ! Je viens de commander le Pack Starter Vydio. Je suis prêt à faire le brief de 5 min.',
+        // Card info "Brief stratégie"
+        infoBrief: {
+          icon: '⚡',
+          label: 'Livraison 48h',
+          value: 'Tes 3 vidéos arrivent dans moins de 48h sur Drive privé.'
+        },
+        // Card info "Garantie"
+        infoGuarantee: {
+          label: 'Sans engagement',
+          value: 'Pack one-shot, aucun abonnement, aucun frais caché.'
+        }
+      },
+
+      growth: {
+        name: 'Pack Growth — 20 créas UGC IA',
+        price: 859,
+        rows: [
+          ['20 vidéos UGC IA · format 9:16', '✓ Inclus'],
+          ['20 hooks différents testés', '✓ Inclus'],
+          ['30 images 4:5 offertes', '✓ Inclus'],
+          ['Garantie 2 ROAS ou remboursé', '✓ Activée'],
+          ['Droits commerciaux à vie', '✓ Transférés'],
+          ['Brief stratégie 30min offert', '✓ À planifier']
+        ],
+        step1: 'On a besoin de 3 infos pour démarrer : <b>lien Shopify</b>, <b>3 photos produit</b>, et <b>ta cible client idéale</b>.<br>Ça prend 5 minutes chrono. Zéro Notion à remplir.',
+        step2: 'Dès qu\'on a tes infos, on écrit <b>20 scripts uniques</b> (3 angles : douleur · désir · preuve), on choisit les avatars, et on lance la prod IA.',
+        step3Title: 'Tes 20 créas livrées sur Drive',
+        step3Desc: 'Tu reçois un lien Drive privé avec <b>tes 20 vidéos en formats 9:16 avec et sans captions</b>, plus tes 30 images 4:5. Prêtes à uploader sur Meta.',
+        step3Tag: 'J+5 ouvrés max',
+        step4: 'Tu uploades sur Meta Ads. Premier winner détecté sous 7 jours en moyenne. <b>Si aucune des 20 ne fait 2 ROAS</b>, on te rembourse à 100%.',
+        waMessage: 'Hey ! Je viens de commander le Pack Growth Vydio. Je suis prêt à faire le brief de 5 min.',
+        infoBrief: {
+          icon: '🗓️',
+          label: 'Brief stratégie 30min',
+          value: 'Offert avec ton Pack Growth. On planifie en visio quand tu veux.'
+        },
+        infoGuarantee: {
+          label: 'Garantie ROAS',
+          value: 'Si aucune créa ne fait 2 ROAS sur 7j de test, on te rembourse à 100%.'
+        }
+      },
+
+      scale: {
+        name: 'Pack Scale — Production continue',
+        price: null, // sur devis
+        rows: [
+          ['50 à 200 vidéos/mois', '✓ Inclus'],
+          ['Production en flux continu', '✓ Activée'],
+          ['Brief créatif mensuel', '✓ Inclus'],
+          ['Account manager dédié', '✓ Assigné'],
+          ['Reporting performance hebdo', '✓ Activé'],
+          ['SLA livraison contractuel', '✓ Signé']
+        ],
+        step1: 'On planifie un call de cadrage pour valider ton volume mensuel, ton calendrier de drop, et ton account manager dédié.<br>15 minutes max.',
+        step2: 'On construit ton brief créatif mensuel : angles, hooks, avatars, planning des drops. <b>Tout est calé à l\'avance.</b>',
+        step3Title: 'Première vague de créas livrée',
+        step3Desc: 'Ton account manager te livre les premières créas selon le calendrier convenu, en flux continu. <b>Reporting hebdo</b> directement dans ton Slack/Notion.',
+        step3Tag: 'Selon SLA contractuel',
+        step4: 'Tu scales en continu. <b>Tarif dégressif jusqu\'à −40%</b> selon ton volume. On itère ensemble sur les angles qui performent le mieux.',
+        waMessage: 'Hey ! Je viens de signer le Pack Scale Vydio. On peut planifier le call de cadrage ?',
+        infoBrief: {
+          icon: '👤',
+          label: 'Account Manager dédié',
+          value: 'Tu auras un contact unique chez Vydio, disponible sur Slack et WhatsApp prioritaire.'
+        },
+        infoGuarantee: {
+          label: 'SLA contractuel',
+          value: 'Délais de livraison garantis par contrat. Pénalités si dépassement.'
+        }
+      }
+    };
+
+    // 1. Lire le paramètre URL
+    const params = new URLSearchParams(location.search);
+    const packKey = (params.get('pack') || 'growth').toLowerCase();
+    const pack = PACKS[packKey] || PACKS.growth;
+
+    // 2. Remplir le récap commande
+    document.getElementById('orderName').textContent = pack.name;
+    const rowsEl = document.getElementById('orderRows');
+    rowsEl.innerHTML = pack.rows.map(([label, value]) =>
+      `<div class="ty-order__row"><span>${label}</span><span>${value}</span></div>`
+    ).join('');
+
+    // 3. Remplir les steps
+    document.getElementById('step1Desc').innerHTML = pack.step1;
+    document.getElementById('step2Desc').innerHTML = pack.step2;
+    document.getElementById('step3Title').textContent = pack.step3Title;
+    document.getElementById('step3Desc').innerHTML = pack.step3Desc;
+    document.getElementById('step3Tag').textContent = pack.step3Tag;
+    document.getElementById('step4Desc').innerHTML = pack.step4;
+
+    // 4. Remplir le CTA WhatsApp
+    const waBaseUrl = 'https://wa.me/32483107116?text=';
+    document.getElementById('waCta').href = waBaseUrl + encodeURIComponent(pack.waMessage);
+
+    // 5. Remplir les cards "à savoir"
+    document.getElementById('infoBriefIcon').textContent = pack.infoBrief.icon;
+    document.getElementById('infoBriefLabel').textContent = pack.infoBrief.label;
+    document.getElementById('infoBriefValue').textContent = pack.infoBrief.value;
+    document.getElementById('infoGuaranteeLabel').textContent = pack.infoGuarantee.label;
+    document.getElementById('infoGuaranteeValue').textContent = pack.infoGuarantee.value;
+
+    // 6. Log pour debug + tracking conversion (à activer plus tard)
+    console.log(`Vydio · Page de confirmation chargée · Pack : ${packKey} · Montant : ${pack.price ? pack.price + '€' : 'sur devis'}`);
+
+    // TODO Meta Pixel (quand tu l'auras) :
+    // if (pack.price && typeof fbq !== 'undefined') {
+    //   fbq('track', 'Purchase', { value: pack.price, currency: 'EUR', content_name: pack.name });
+    // }
+    //
+    // TODO GA4 (quand tu l'auras) :
+    // if (pack.price && typeof gtag !== 'undefined') {
+    //   gtag('event', 'purchase', {
+    //     transaction_id: 'auto_' + Date.now(),
+    //     value: pack.price,
+    //     currency: 'EUR',
+    //     items: [{ item_name: pack.name }]
+    //   });
+    // }
   </script>
 </body>
 </html>
