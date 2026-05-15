@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bienvenue chez Vydio — On démarre ta production maintenant</title>
+  <meta name="description" content="Ta commande est confirmée. Tes 20 créas UGC IA sont en production. Réponds à 3 questions sur WhatsApp et c'est parti." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Styles spécifiques à la page de remerciement */
+    .ty-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 100px 20px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .ty-confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ty-confetti::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 900px;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.25) 0%, rgba(157, 78, 255, 0.12) 30%, transparent 65%);
+      filter: blur(60px);
+    }
+    .ty-confetti::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(circle at 50% 40%, black 0%, transparent 70%);
+    }
+    .ty-container {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .ty-check {
+      width: 88px;
+      height: 88px;
+      margin: 0 auto 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
+      border-radius: 50%;
+      box-shadow: 0 0 60px rgba(0, 229, 255, 0.5), 0 0 20px var(--cyan-glow);
+      animation: ty-pop 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+    }
+    @keyframes ty-pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .ty-check svg {
+      width: 44px;
+      height: 44px;
+      color: var(--bg);
+      stroke-width: 3.5;
+    }
+    .ty-kicker {
+      display: block;
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: var(--cyan);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .ty-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .ty-title .grad {
+      background: var(--grad-text-bold);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 30px rgba(0, 229, 255, 0.3));
+    }
+    .ty-subtitle {
+      text-align: center;
+      color: var(--gray-100);
+      font-size: 1.15rem;
+      line-height: 1.55;
+      max-width: 580px;
+      margin: 0 auto 48px;
+    }
+    .ty-subtitle b { color: var(--cyan); }
+
+    /* Carte récap de commande */
+    .ty-order {
+      background: linear-gradient(180deg, rgba(0, 229, 255, 0.08), rgba(157, 78, 255, 0.04));
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 48px;
+      box-shadow: var(--shadow-glow);
+    }
+    .ty-order__head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .ty-order__label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.82rem;
+      color: var(--gray-300);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+    .ty-order__badge {
+      font-size: 0.78rem;
+      padding: 5px 12px;
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ty-order__badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+      animation: wa-online-pulse 2s ease-in-out infinite;
+    }
+    .ty-order__name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .ty-order__rows {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ty-order__row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      color: var(--gray-100);
+      padding: 6px 0;
+    }
+    .ty-order__row span:last-child {
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    /* Bloc steps */
+    .ty-steps {
+      margin-bottom: 48px;
+    }
+    .ty-steps__title {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 28px;
+    }
+    .ty-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      padding: 20px 22px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      margin-bottom: 14px;
+      transition: all 0.3s;
+    }
+    .ty-step:hover {
+      border-color: rgba(0, 229, 255, 0.3);
+      background: rgba(0, 229, 255, 0.03);
+    }
+    .ty-step--active {
+      border-color: var(--cyan);
+      background: linear-gradient(180deg, rgba(0, 229, 255, 0.08), rgba(157, 78, 255, 0.04));
+      box-shadow: var(--shadow-glow);
+    }
+    .ty-step__num {
+      flex-shrink: 0;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--gray-300);
+    }
+    .ty-step--done .ty-step__num {
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
+      color: var(--bg);
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+    .ty-step--active .ty-step__num {
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--cyan);
+      border-color: var(--cyan);
+      box-shadow: 0 0 16px var(--cyan-glow);
+    }
+    .ty-step__body {
+      flex-grow: 1;
+    }
+    .ty-step__title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+      color: var(--white);
+    }
+    .ty-step__desc {
+      font-size: 0.92rem;
+      color: var(--gray-300);
+      line-height: 1.5;
+    }
+    .ty-step__desc b { color: var(--cyan); }
+    .ty-step__tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 3px 10px;
+      background: rgba(0, 229, 255, 0.12);
+      color: var(--cyan);
+      border-radius: 999px;
+      margin-top: 8px;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .ty-step__tag--done {
+      background: rgba(74, 222, 128, 0.12);
+      color: #4ade80;
+    }
+
+    /* CTA principal */
+    .ty-cta {
+      padding: 36px 30px;
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(157, 78, 255, 0.08));
+      border: 1px solid rgba(0, 229, 255, 0.4);
+      border-radius: var(--radius-lg);
+      text-align: center;
+      box-shadow: var(--shadow-glow-strong);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .ty-cta::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.15), transparent 60%);
+      z-index: 0;
+    }
+    .ty-cta > * { position: relative; z-index: 1; }
+    .ty-cta h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .ty-cta p {
+      color: var(--gray-100);
+      font-size: 1rem;
+      line-height: 1.55;
+      margin-bottom: 24px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .ty-cta p b { color: var(--cyan); }
+    .ty-cta__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: white;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      letter-spacing: -0.01em;
+    }
+    .ty-cta__btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.55);
+    }
+    .ty-cta__micro {
+      margin-top: 14px;
+      font-size: 0.82rem;
+      color: var(--gray-500);
+    }
+
+    /* Section "à savoir" */
+    .ty-info {
+      margin-bottom: 48px;
+    }
+    .ty-info__title {
+      text-align: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .ty-info__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .ty-info__card {
+      padding: 22px 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: var(--radius-md);
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .ty-info__card:hover {
+      border-color: rgba(0, 229, 255, 0.3);
+      transform: translateY(-3px);
+    }
+    .ty-info__icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: inline-block;
+      filter: drop-shadow(0 0 10px var(--cyan-glow));
+    }
+    .ty-info__label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cyan);
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .ty-info__value {
+      font-size: 0.92rem;
+      color: var(--gray-100);
+      line-height: 1.4;
+    }
+
+    /* Footer simple */
+    .ty-footer {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--gray-500);
+      font-size: 0.85rem;
+    }
+    .ty-footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+    .ty-footer a:hover { text-decoration: underline; }
+    .ty-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      padding: 10px 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--gray-300);
+      border-radius: 10px;
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .ty-back:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    @media (max-width: 640px) {
+      .ty-page { padding: 70px 18px 50px; }
+      .ty-check { width: 72px; height: 72px; }
+      .ty-check svg { width: 36px; height: 36px; }
+      .ty-order { padding: 22px 20px; }
+      .ty-order__head { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .ty-step { padding: 16px 18px; gap: 14px; }
+      .ty-step__num { width: 36px; height: 36px; font-size: 1rem; }
+      .ty-step__title { font-size: 1rem; }
+      .ty-cta { padding: 28px 22px; }
+      .ty-cta__btn { padding: 14px 24px; font-size: 0.95rem; width: 100%; justify-content: center; }
+      .ty-info__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ty-page">
+    <div class="ty-confetti"></div>
+
+    <div class="ty-container">
+
+      <!-- ====== HEADER : Check + Titre ====== -->
+      <div class="ty-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <span class="ty-kicker">Paiement confirmé</span>
+      <h1 class="ty-title">Welcome aboard.<br><span class="grad">On démarre maintenant.</span></h1>
+      <p class="ty-subtitle">
+        Bienvenue chez Vydio. Tu fais maintenant partie des <b>150+ marques</b> qui ont décidé d'arrêter de payer 300€ la vidéo.<br>
+        Ta facture arrive dans ta boîte mail dans les prochaines secondes.
+      </p>
+
+      <!-- ====== RÉCAP DE COMMANDE ====== -->
+      <div class="ty-order">
+        <div class="ty-order__head">
+          <span class="ty-order__label">Récap de ta commande</span>
+          <span class="ty-order__badge">En cours de prise en charge</span>
+        </div>
+        <div class="ty-order__name">Pack Growth — 20 créas UGC IA</div>
+        <div class="ty-order__rows">
+          <div class="ty-order__row"><span>20 vidéos UGC IA · format 9:16</span><span>✓ Inclus</span></div>
+          <div class="ty-order__row"><span>20 hooks différents testés</span><span>✓ Inclus</span></div>
+          <div class="ty-order__row"><span>30 images 4:5 offertes</span><span>✓ Inclus</span></div>
+          <div class="ty-order__row"><span>Garantie 2 ROAS ou remboursé</span><span>✓ Activée</span></div>
+          <div class="ty-order__row"><span>Droits commerciaux à vie</span><span>✓ Transférés</span></div>
+          <div class="ty-order__row"><span>Brief stratégie 30min offert</span><span>✓ À planifier</span></div>
+        </div>
+      </div>
+
+      <!-- ====== ÉTAPES À VENIR ====== -->
+      <div class="ty-steps">
+        <h2 class="ty-steps__title">Tes prochaines 48 heures, chrono :</h2>
+
+        <div class="ty-step ty-step--done">
+          <div class="ty-step__num">✓</div>
+          <div class="ty-step__body">
+            <div class="ty-step__title">Paiement validé</div>
+            <div class="ty-step__desc">Ton paiement est confirmé. La facture conforme arrive dans ta boîte mail dans moins d'une minute.</div>
+            <span class="ty-step__tag ty-step__tag--done">Fait — il y a quelques secondes</span>
+          </div>
+        </div>
+
+        <div class="ty-step ty-step--active">
+          <div class="ty-step__num">1</div>
+          <div class="ty-step__body">
+            <div class="ty-step__title">Onboarding express sur WhatsApp</div>
+            <div class="ty-step__desc">On a besoin de 3 infos pour démarrer : <b>lien Shopify</b>, <b>3 photos produit</b>, et <b>ta cible client idéale</b>. <br>Ça prend 5 minutes chrono. Zéro Notion à remplir.</div>
+            <span class="ty-step__tag">Maintenant — clique le bouton vert ↓</span>
+          </div>
+        </div>
+
+        <div class="ty-step">
+          <div class="ty-step__num">2</div>
+          <div class="ty-step__body">
+            <div class="ty-step__title">Production lancée par notre équipe</div>
+            <div class="ty-step__desc">Dès qu'on a tes infos, on écrit <b>20 scripts uniques</b> (3 angles : douleur · désir · preuve), on choisit les avatars, et on lance la prod IA.</div>
+            <span class="ty-step__tag">Sous 24h après ton brief</span>
+          </div>
+        </div>
+
+        <div class="ty-step">
+          <div class="ty-step__num">3</div>
+          <div class="ty-step__body">
+            <div class="ty-step__title">Tes 20 créas livrées sur Drive</div>
+            <div class="ty-step__desc">Tu reçois un lien Drive privé avec <b>tes 20 vidéos en formats 9:16 avec et sans captions</b>, plus tes 30 images 4:5. Prêtes à uploader sur Meta.</div>
+            <span class="ty-step__tag">J+5 ouvrés max</span>
+          </div>
+        </div>
+
+        <div class="ty-step">
+          <div class="ty-step__num">4</div>
+          <div class="ty-step__body">
+            <div class="ty-step__title">Tu lances, tu scales, tu reviens nous voir</div>
+            <div class="ty-step__desc">Tu uploades sur Meta Ads. Premier winner détecté sous 7 jours en moyenne. <b>Si aucune des 20 ne fait 2 ROAS</b>, on te rembourse à 100%.</div>
+            <span class="ty-step__tag">Ta nouvelle vie commence</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== CTA PRINCIPAL : WHATSAPP ====== -->
+      <div class="ty-cta">
+        <h2>Étape 1 : envoie-nous ton brief sur WhatsApp</h2>
+        <p>
+          Plus vite tu nous envoies ton lien Shopify, plus vite tes créas sont en prod.<br>
+          On répond <b>à la seconde</b> ⚡
+        </p>
+        <a href="https://wa.me/32483107116?text=Hey%20!%20Je%20viens%20de%20commander%20le%20Pack%20Growth%20Vydio.%20Je%20suis%20pr%C3%AAt%20%C3%A0%20faire%20le%20brief%20de%205%20min." target="_blank" rel="noopener" class="ty-cta__btn">
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="currentColor">
+            <path d="M27.42 4.58A15.93 15.93 0 0 0 16.05 0C7.36 0 .28 7.07.28 15.76c0 2.78.73 5.49 2.12 7.88L0 32l8.53-2.24a15.77 15.77 0 0 0 7.52 1.92h.01c8.7 0 15.78-7.07 15.78-15.76 0-4.21-1.64-8.17-4.42-11.34ZM16.06 28.66h-.01a13.13 13.13 0 0 1-6.69-1.83l-.48-.29-4.97 1.3 1.33-4.85-.31-.5a13.1 13.1 0 0 1-2.01-6.99c0-7.24 5.89-13.12 13.13-13.12 3.5 0 6.8 1.36 9.27 3.85a13 13 0 0 1 3.85 9.28c0 7.23-5.89 13.11-13.11 13.11Zm7.18-9.81c-.39-.2-2.32-1.15-2.68-1.27-.36-.13-.62-.2-.88.2-.26.39-1.01 1.27-1.24 1.53-.23.26-.45.29-.84.1-.39-.2-1.66-.61-3.16-1.95-1.17-1.04-1.96-2.32-2.19-2.71-.23-.39-.02-.6.17-.79.17-.17.39-.45.58-.68.2-.23.26-.39.39-.65.13-.26.07-.49-.03-.68-.1-.2-.88-2.12-1.21-2.91-.32-.76-.64-.66-.88-.67-.23-.01-.49-.01-.75-.01s-.68.1-1.04.49c-.36.39-1.37 1.34-1.37 3.27 0 1.92 1.4 3.78 1.6 4.04.2.26 2.76 4.22 6.69 5.92.94.4 1.67.65 2.24.83.94.3 1.79.26 2.46.16.75-.11 2.32-.95 2.65-1.86.33-.91.33-1.69.23-1.86-.1-.16-.36-.26-.75-.46Z"/>
+          </svg>
+          Démarrer mon brief sur WhatsApp
+        </a>
+        <p class="ty-cta__micro">⚡ Réponse instantanée en journée · 6j/7 · 9h-22h</p>
+      </div>
+
+      <!-- ====== À SAVOIR ====== -->
+      <div class="ty-info">
+        <h3 class="ty-info__title">À savoir tout de suite</h3>
+        <div class="ty-info__grid">
+          <div class="ty-info__card">
+            <div class="ty-info__icon">📧</div>
+            <div class="ty-info__label">Ta facture</div>
+            <div class="ty-info__value">Envoyée par mail dans la minute. Conforme TVA BE/FR pour ta compta.</div>
+          </div>
+          <div class="ty-info__card">
+            <div class="ty-info__icon">🗓️</div>
+            <div class="ty-info__label">Brief stratégie 30min</div>
+            <div class="ty-info__value">Offert avec ton Pack Growth. On planifie en visio quand tu veux.</div>
+          </div>
+          <div class="ty-info__card">
+            <div class="ty-info__icon">🛡️</div>
+            <div class="ty-info__label">Garantie ROAS</div>
+            <div class="ty-info__value">Si aucune créa ne fait 2 ROAS sur 7j de test, on te rembourse à 100%.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====== FOOTER ====== -->
+      <div class="ty-footer">
+        <p>Une question urgente ? <a href="https://wa.me/32483107116" target="_blank" rel="noopener">WhatsApp</a> · <a href="mailto:hello@tryvydio.com">hello@tryvydio.com</a></p>
+        <a href="index.html" class="ty-back">← Retour au site</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Auto-déclenchement du conversion event Meta Pixel / GA4 (sera activé quand les IDs seront connus)
+    // Pour l'instant : juste console.log pour vérifier que la page charge bien
+    console.log('Vydio · Page de confirmation chargée — prêt pour tracking conversion');
+
+    // TODO quand tu auras Meta Pixel : fbq('track', 'Purchase', { value: 859.00, currency: 'EUR' });
+    // TODO quand tu auras GA4 : gtag('event', 'purchase', { transaction_id: '...', value: 859.00, currency: 'EUR' });
+  </script>
+</body>
+</html>
